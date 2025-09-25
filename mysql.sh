@@ -41,5 +41,5 @@ mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOG_FILE
 VALIDATE $? "set root password"
 
 END_TIME=$(date +%s)
-TOTAL_TIME=$(($START_TIME - $END_TIME))
+TOTAL_TIME=$(($END_TIME - $START_TIME))
 echo -e "Script executed in: $Y $TOTAL_TIME Seconds $N"
