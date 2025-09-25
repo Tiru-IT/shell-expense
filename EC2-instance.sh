@@ -1,9 +1,9 @@
 #!/bin/bash
 
 AMI_ID="ami-09c813fb71547fc4f"
-SG-ID="sg-0f3a1afbf0bbc7f0e"
+SG_ID="sg-0f3a1afbf0bbc7f0e"
 ZONE_ID="Z0434065211S39GVO4UF0"
-DOMINE_NAME="tirusatrapu.fun"
+DOMAIN_NAME="tirusatrapu.fun"
 
 
 for instance in $@
