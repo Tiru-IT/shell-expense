@@ -67,7 +67,7 @@ VALIDATE $? "unzip the code"
 npm install &>>$LOG_FILE
 VALIDATE $? " npm install"
 
-cp $SCRIPT_DIR/$backend.serivce /etc/systemd/system/backend.service &>>$LOG_FILE
+cp $SCRIPT_DIR/backend.serivce /etc/systemd/system/backend.service &>>$LOG_FILE
 VALIDATE $? " copy the backend service"
 
 systemctl daemon-reload
