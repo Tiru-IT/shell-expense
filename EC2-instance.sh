@@ -5,7 +5,7 @@ SG_ID="sg-0f3a1afbf0bbc7f0e"
 ZONE_ID="Z0434065211S39GVO4UF0"
 DOMINE_NAME="tirusatrapu.fun"
 
-for instance in $@
+for Instances in $@
 do
 	INSTANCE_ID=(aws ec2 run-instances \
 		--image-id "$AMI_ID" \
@@ -19,7 +19,7 @@ do
 			  --instance-ids "$INSTANCE_ID" \
 			  --query 'Reservations[0].Instances[0].PrivateIpAddress' \
 			  --output text)
-		RECORD_NAME="$Instances.$DOMINE_NAME"
+		RECORD_NAME="$instances.$DOMINE_NAME"
 	else
 		IP=$(aws ec2 describe-instances \
 			  --instance-ids "$INSTANCE_ID" \
