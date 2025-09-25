@@ -32,13 +32,13 @@ VALIDATE(){
     fi        
 }
 
-dnf module disable nodejs -y
+dnf module disable nodejs -y &>>$LOG_FILE
 VALIDATE $? "disable nodejs"
 
-dnf module enable nodejs:20 -y
+dnf module enable nodejs:20 -y &>>$LOG_FILE
 VALIDATE $? "enable nodejs"
 
-dnf install nodejs -y
+dnf install nodejs -y &>>$LOG_FILE
 VALIDATE $? "install nodejs"
 
 id expense
@@ -52,7 +52,7 @@ fi
 mkdir /app
 VALIDATE $? "Creating app directory"
 
-curl -o /tmp/backend.zip https://expense-joindevops.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
+curl -o /tmp/backend.zip https://expense-joindevops.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>$LOG_FILE
 VALIDATE $? " download backend appilication"
 
 cd /app
@@ -61,23 +61,23 @@ VALIDATE $? " move to app"
 rm rf /app/*
 VALIDATE $? "Removing existing code"
 
-unzip /tmp/backend.zip
+unzip /tmp/backend.zip &>>$LOG_FILE
 VALIDATE $? "unzip the code"
 
-npm install
+npm install &>>$LOG_FILE
 VALIDATE $? " npm install"
 
-cp $SCRIPT_DIR/$backend.serivce /etc/systemd/system/backend.service
+cp $SCRIPT_DIR/$backend.serivce /etc/systemd/system/backend.service &>>$LOG_FILE
 VALIDATE $? " copy the backend service"
 
 systemctl daemon-reload
-systemctl enable backend
+systemctl enable backend &>>$LOG_FILE
 VALIDATE $? " enable backend"
 
-dnf install mysql -y
+dnf install mysql -y &>>$LOG_FILE
 VALIDATE $? "install mysql"
 
-mysql -h $mysql_ip -uroot -pExpenseApp@1 < /app/schema/backend.sql
+mysql -h $mysql_ip -uroot -pExpenseApp@1 < /app/schema/backend.sql &>>$LOG_FILE
 VALIDATE $? "connet to user"
 
 systemctl restart backend
