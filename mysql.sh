@@ -5,12 +5,13 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
-START_TIME=$(date + %s)
+START_TIME=$(date +%s)
+
 LOGS_FOLDER="/var/log/shell-expense"
 SCRIPT_NAME=$( echo $0 | cut -d "." -f1)
 LOG_FILE=$LOGS_FOLDER/$SCRIPT_NAME.log
 
-mkdir -p $LOGS_FOLDE
+mkdir -p $LOGS_FOLDER
 echo -e "script started and exicuted at:$(date)" | tee -a $LOG_FILE
 
 if [ $USER_ID -ne 0 ]; then
