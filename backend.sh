@@ -41,7 +41,7 @@ VALIDATE $? "enable nodejs"
 dnf install nodejs -y &>>$LOG_FILE
 VALIDATE $? "install nodejs"
 
-id expense
+id expense &>>$LOG_FILE
 if [ $? -ne 0 ]; then
     useradd expense &>>$LOG_FILE
     VALIDATE $? "user add"
@@ -82,3 +82,8 @@ VALIDATE $? "connet to user"
 
 systemctl restart backend
 VALIDATE $? "restart backend"
+
+
+END_TIME=$(date +%s)
+TOTAL_TIME=$(($END_TIME - $START_TIME))
+echo -e "Script executed in: $Y $TOTAL_TIME Seconds $N"
