@@ -1,8 +1,8 @@
 #!/bin/bash
 
-AMI_ID=ami-09c813fb71547fc4f
-SG_ID=sg-0f3a1afbf0bbc7f0e
-ZONE_ID=Z0434065211S39GVO4UF0
+AMI_ID="ami-09c813fb71547fc4f"
+SG_ID="sg-0f3a1afbf0bbc7f0e"
+ZONE_ID="Z0434065211S39GVO4UF0"
 DOMINE_NAME="tirusatrapu.fun"
 
 for instance in $@
@@ -19,13 +19,13 @@ do
 			  --instance-ids "$INSTANCE_ID" \
 			  --query 'Reservations[0].Instances[0].PrivateIpAddress' \
 			  --output text)
-		RECORD_NAME="$Instances.DOMINE_NAME"
+		RECORD_NAME="$Instances.$DOMINE_NAME"
 	else
 		IP=$(aws ec2 describe-instances \
 			  --instance-ids "$INSTANCE_ID" \
 			  --query 'Reservations[0].Instances[0].PublicIpAddress' \
 			  --output text)
-		RECORD_NAME="DOMINE_NAME"
+		RECORD_NAME="$DOMINE_NAME"
 	fi
 	echo "$instance: $IP"
 	
