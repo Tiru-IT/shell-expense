@@ -43,7 +43,7 @@ VALIDATE $? "install nodejs"
 
 id expense
 if [ $? -ne 0 ]; then
-    useradd expense
+    useradd expense &>>$LOG_FILE
     VALIDATE $? "user add"
 else
     echo -e "user already exits ..$Y SKIPPING $N"
@@ -53,10 +53,10 @@ mkdir -p /app
 VALIDATE $? "Creating app directory"
 
 curl -o /tmp/backend.zip https://expense-joindevops.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>$LOG_FILE
-VALIDATE $? " download backend appilication"
+VALIDATE $? "download backend appilication"
 
 cd /app
-VALIDATE $? " move to app"
+VALIDATE $? "move to app"
 
 rm -rf /app/*
 VALIDATE $? "Removing existing code"
@@ -67,7 +67,7 @@ VALIDATE $? "unzip the code"
 npm install &>>$LOG_FILE
 VALIDATE $? " npm install"
 
-cp $SCRIPT_DIR/backend.serivce /etc/systemd/system/backend.service &>>$LOG_FILE
+cp $SCRIPT_DIR/backend.service /etc/systemd/system/backend.service &>>$LOG_FILE
 VALIDATE $? " copy the backend service"
 
 systemctl daemon-reload
