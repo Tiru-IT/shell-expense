@@ -5,7 +5,7 @@ SG_ID=sg-0f3a1afbf0bbc7f0e
 
 for instance in $@
 do
-	INSTANCE_ID=(aws ec2 run-instances \
+	INSTANCE_ID=$(aws ec2 run-instances \
 		--image-id "$AMI_ID" \
 		--instance-type "t3.micro" \
 		--security-group-ids "$SG_ID" \
@@ -23,5 +23,6 @@ do
 			  --query 'Reservations[0].Instances[0].PublicIpAddress' \
 			  --output text)
 	fi		
+	echo "$instance: $IP"
 		
 done
