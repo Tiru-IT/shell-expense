@@ -2,10 +2,12 @@
 
 AMI_ID=ami-09c813fb71547fc4f
 SG_ID=sg-0f3a1afbf0bbc7f0e
+ZONE_ID=Z0434065211S39GVO4UF0
+DOMINE_NAME="tirusatrapu.fun"
 
 for instance in $@
 do
-	INSTANCE_ID=$(aws ec2 run-instances \
+	INSTANCE_ID=(aws ec2 run-instances \
 		--image-id "$AMI_ID" \
 		--instance-type "t3.micro" \
 		--security-group-ids "$SG_ID" \
@@ -17,12 +19,33 @@ do
 			  --instance-ids "$INSTANCE_ID" \
 			  --query 'Reservations[0].Instances[0].PrivateIpAddress' \
 			  --output text)
+		RECORD_NAME="$Instances.DOMINE_NAME"
 	else
 		IP=$(aws ec2 describe-instances \
 			  --instance-ids "$INSTANCE_ID" \
 			  --query 'Reservations[0].Instances[0].PublicIpAddress' \
 			  --output text)
-	fi		
+		RECORD_NAME="DOMINE_NAME"
+	fi
 	echo "$instance: $IP"
+	
+	aws route53 change-resource-record-sets \
+    --hosted-zone-id $ZONE_ID \
+    --change-batch '
+    {
+        "Comment": "Updating record set"
+        ,"Changes": [{
+        "Action"              : "UPSERT"
+        ,"ResourceRecordSet"  : {
+            "Name"              : "'$RECORD_NAME'"
+            ,"Type"             : "A"
+            ,"TTL"              : 1
+            ,"ResourceRecords"  : [{
+                "Value"         : "'$IP'"
+            }]
+        }
+        }]
+    }
+    '
 		
 done
