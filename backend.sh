@@ -49,7 +49,7 @@ else
     echo -e "user already exits ..$Y SKIPPING $N"
 fi 
 
-mkdir /app
+mkdir -p /app
 VALIDATE $? "Creating app directory"
 
 curl -o /tmp/backend.zip https://expense-joindevops.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>$LOG_FILE
