@@ -16,7 +16,6 @@ LOGS_FOLDER="/var/log/shell-expense"
 SCRIPT_NAME=$( echo $0 | cut -d "." -f1)
 LOG_FILE=$LOGS_FOLDER/$SCRIPT_NAME.log
 
-mysql_ip=".tirusatrapu.fun"
 SCRIPT_DIR=$PWD
 
 START_TIME=$(date +%s)
